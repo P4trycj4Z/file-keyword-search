@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel = "stylesheet" href = "style.css">
+</head>
+<body>
+    <h1>This is your file search place</h1>
+
+
+    <input type="file" class = "text" id="fileInput" multiple accept = ".txt"/>
+     <div class = "text" id="drop-zone">
+    2.Drop images here, or click to upload.
+     </div><br>
+    <button class = "text" id="clearBtn">Clear</button>
+
+
+    <div class = "wordInput">
+
+        <label id = "searchWordL" class = "inpt text ">1.Type a word to search in your files</label> <br><br>
+        <input id = "searchWord" class = "inpt text "><br><br>
+        <button id = "wordSubmit" class = "inpt text">submit</button>
+        <label></label>
+    </div>
+
+
+
+    <p class = "text" id = "fileList">Word was found in: </p>
+    <div class = "box1 text" id = "results"></div>
+    <p class = "box1 text" id = "progressInfo"></p>
+
+
+
+    <div class = "container text">
+        <div class = "box" id = "box1">Instantly search through multiple text files at once. Perfect for locating specific conversations in chat histories or finding topics across numerous work documents. This search tool accepts only txt files. Before uploading your files convert them to txt format</div>
+        <div class = "box" id = "box2">Try to remember a phrase, not something generic that could occur in multiple documents. If you remember talking with bot about German Shepherds that could be your best option to find your document </div>
+        <div class = "box" id = "box3"> Simply enter your key phrase and get immediate results showing which files contain your search term. No more manually scrolling through endless files to find that one important message or document</div>
+    </div>
+
+
+    <script>
+        const searchWord = document.getElementById("searchWord")
+        const wordSubmit = document.getElementById("wordSubmit")
+        const wordInFile = new Map()
+        const fileList = document.getElementById("fileList")
+        const fileInput = document.getElementById("fileInput")
+        const clearBtn = document.getElementById("clearBtn")
+        const results = document.getElementById("results")
+        const progressInfo = document.getElementById("progressInfo")
+
+// get phrase that user is searching for
+        wordSubmit.addEventListener("click",(e) => {
+            console.log(searchWord.value)
+        })
+
+// clear button
+        clearBtn.addEventListener("click", function(){
+            searchWord.value = ""
+            fileInput.value = ""
+            results.textContent = ""
+            fileList.textContent = "Word was found in:"
+        })
+
+
+// get user files and search files for key phrase
+        fileInput.addEventListener("change", async (e) => {
+            progressInfo.textContent = "Loading Files"
+            const files = Array.from(e.target.files)
+            wordInFile.clear()
+            await Promise.all(files.map(async(file) => {
+                try{
+                    if (file.type === "text/plain"){
+                        const text = await file.text()
+                        const val = text.search(searchWord.value)
+                        wordInFile.set(file.name,val)
+                    }else{
+                        alert("All files must be txt")
+                    }
+                    }
+                catch(error){console.error(error)}
+
+            }))
+            showList()
+        })
+
+
+
+// show a list of all files containing the phrase
+       function showList(){
+            results.textContent = ""
+            progressInfo.textContent = "Searching"
+            let found = 0
+            for (const[key,value] of wordInFile){
+                    if(value != -1 & searchWord.value != ""){
+                        console.log(key,value)
+                        const p = document.createElement("p")
+                        p.textContent = key
+                        results.appendChild(p)
+                        found ++
+
+                    }
+                    if (found === 0 & searchWord.value != ""){
+                        fileList.textContent = "No matches found"}
+
+
+            }
+        progressInfo.textContent = ""
+        }
+
+// drop zone animations
+
+    fileInput.addEventListener("dragover",()=>{fileInput.style.backgroundColor = "rgb(220, 236, 245)"
+        fileInput.style.width = "550px"
+        fileInput.style.height = "250px"
+        fileInput.style.border = "dotted"
+        fileInput.style.borderColor = "rgb(38, 175, 252)"
+        fileInput.style.borderWidth = "3px"
+    })
+
+    fileInput.addEventListener("dragleave",()=>{fileInput.style.backgroundColor = "white"
+        fileInput.style.width = "500px"
+        fileInput.style.height = "200px"
+        fileInput.style.border = "none"
+    })
+
+    fileInput.addEventListener("drop",()=>{fileInput.style.backgroundColor = "white"
+        fileInput.style.width = "500px"
+        fileInput.style.height = "200px"
+        fileInput.style.border = "none"
+    })
+
+    </script>
+
+</body>
+</html>

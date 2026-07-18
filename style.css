@@ -1,0 +1,126 @@
+body{
+
+    background-color: rgb(242,242,242);
+    /*display: flex;
+    flex-direction: column;
+    */
+
+}
+
+h1{
+background-color: white;
+text-align: center;
+font-family: "Noto Sans",arial;
+font-weight: 800;
+margin: 10px;
+padding: 5px;
+
+
+
+}
+
+.wordInput{
+
+font-weight: 300px;
+
+}
+
+
+
+.text{
+    font-family: "Noto Sans",arial;
+}
+
+
+
+#fileInput{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   background-color: white;
+   height: 200px;
+   width:500px;
+
+}
+
+.inpt{
+    background-color: white;
+    font-weight: 300;
+    border-color: white;
+    position: relative;
+    left: 600px;
+    top: -200px;
+    width: 200px;
+
+}
+
+
+
+.container {
+    display: flex;
+    height: 500px;
+    width: 1100px;
+
+
+
+
+}
+
+.box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    width : 600px;
+    height : 200px;
+    margin: 15px;
+
+
+
+
+
+}
+#box1{
+    background-color: white;
+
+
+}
+
+#box2{
+    background-color: white;
+
+}
+
+
+
+#box3{
+    background-color: white;
+
+}
+
+
+
+#fileList{
+    position: absolute;
+    top: 3px;
+    right: 50px;
+    padding: 20px;
+    text-align: right;
+    font-weight: 300;
+
+}
+
+
+.box1{
+    display: flex;
+    flex-direction: column;
+    justify-content: right;
+    align-items: right;
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    padding: 20px;
+    text-align: right;
+    }
+
+
